@@ -1,6 +1,7 @@
 from model.map import Map
 from model.cell_type import CellType
 from model.cell import Cell
+from model.player import Player
 
 
 test_cell = [
@@ -16,10 +17,9 @@ test_cell_to_put = [
 
 
 def main():
-    map = Map(3, 3, test_cell)
-    map.print()
-    map.put_cells_on_map(1, 0, Map.rotate_cells(test_cell_to_put))
-    map.print()
+    player = Player(name = "Théo", description = "le barbare")
+    player.init_map()
+    player.print_map()
 
 
 if __name__ == '__main__':

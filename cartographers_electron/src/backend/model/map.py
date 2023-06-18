@@ -22,7 +22,7 @@ class Map:
             print((" " if index_col == 0 else "") + "_"*10 + " ", end="")
         print()
         for index_row, row in enumerate(self.cells):
-            print(index_row, end="   |")
+            print(index_row, end="   |" if len(str(index_row)) == 1 else "  |")
             for index_col, cell in enumerate(row):
                 padding = " " if not ((8 - len(str(cell))) / 2).is_integer() else ""
                 print(" " + " "*((8 - len(str(cell))) // 2) + str(cell) + " " + " "*((8 - len(str(cell))) // 2) + padding, end="|")
@@ -46,10 +46,7 @@ class Map:
                 is_possible_to_put_cells = self.is_possible_to_put_cells(x, y, index_row, index_col, cell_to_put, is_possible_to_put_cells)
 
         if is_possible_to_put_cells:
-            for index_row, row in enumerate(cells):
-                for index_col, cell_to_put in enumerate(row):
-                    if cell_to_put.cell_type!= CellType.EMPTY:
-                        self.cells[index_row + y][index_col + x] = Cell(index_col + x, index_row + y, cell_to_put.cell_type)
+            self.finally_put_cells(x, y, cells)
 
         return is_possible_to_put_cells
 
@@ -61,3 +58,9 @@ class Map:
         except IndexError:
             return False
         return is_possible_to_put_cell if is_possible_to_put_cell else False
+
+    def finally_put_cells(self, x: int, y: int, cells: list):
+        for index_row, row in enumerate(cells):
+            for index_col, cell_to_put in enumerate(row):
+                if cell_to_put.cell_type != CellType.EMPTY:
+                    self.cells[index_row + y][index_col + x] = Cell(index_col + x, index_row + y, cell_to_put.cell_type)
