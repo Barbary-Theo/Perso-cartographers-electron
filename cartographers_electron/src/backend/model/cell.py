@@ -10,3 +10,6 @@ class Cell:
 
     def __str__(self):
         return self.cell_type.value
+
+    def change_cell_type(self, cell_type: CellType):
+        self.cell_type = cell_type
